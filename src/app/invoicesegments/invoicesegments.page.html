@@ -1,0 +1,463 @@
+
+
+<ion-header [translucent]="true" >
+  <ion-toolbar >
+   
+    <ion-buttons slot="start" style="color: black;" (click)="go_home()" >
+      <img style="height: 20px;margin-left: 15px;" src="assets/theme/x_bar.png"/>
+    </ion-buttons>
+
+    <ion-title style="color: black;">
+     Checkout
+    </ion-title>
+  </ion-toolbar>
+
+
+  <ion-toolbar color="tertiary" >
+
+    
+    <ion-segment 
+      value="schedule"       
+      scrollable="true"
+      mode="ios"
+      [(ngModel)]="segmentModel" 
+      (ionChange)="segmentChanged($event)"      
+      >
+
+      <ion-segment-button value="schedule" style="margin-left: 5px;">
+        <ion-label>SCHEDULE</ion-label>
+      </ion-segment-button>
+
+      <ion-segment-button value="payment">
+        <ion-label>PAYMENT</ion-label>
+      </ion-segment-button>
+
+      <ion-segment-button value="summary" style="margin-right: 5px;">
+        <ion-label>SUMMARY</ion-label>
+      </ion-segment-button>
+      
+    </ion-segment>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" style="background-color: rgb(248, 244, 244)" >
+<div *ngIf="divschedule" style="background-color: rgb(248, 244, 244);height: 100%;">
+
+  <div style="padding-left: 10px;margin-top: 0px;margin-bottom: 10px;padding-top: 0px;">
+    <div id="spacer" style="height: 20px;"></div>
+        <span style="font-size: medium;"> <b>ADDRESS DETAILS </b>  </span> 
+  </div>
+
+  <div style="padding-left:10px;background-color: white;border-style: outset">
+   
+          <ion-grid *ngFor="let names of personalinfo;" >
+            <ion-row style="margin-top: 5px;" >
+              <ion-col>
+                Email: &nbsp;  {{names.Fetchedemail}}  
+              </ion-col>
+            </ion-row>
+
+            <ion-row >
+              <ion-col>
+                Tel:&nbsp; {{names.Useruphone}} 
+              </ion-col>
+            </ion-row>
+            
+          </ion-grid>
+                  
+    </div>
+
+    <div style="padding-left: 10px;margin-top: 30px;margin-bottom: 10px;">      
+          <span style="font-size: medium;"> <b>Choose a delivery option  </b>  </span> 
+    </div>
+    
+
+    <div style="padding-left:10px;background-color: white;border-style: outset">
+   
+        <ion-list  >
+          <ion-radio-group value={{deli}} [(ngModel)]="deli"  (ionChange)="deliChecked()">
+                   
+            <ion-item lines="none">
+              <ion-label>No delivery  </ion-label>
+              <ion-radio slot="start" value="no_del"></ion-radio>
+            </ion-item>
+            
+            <div  *ngIf="divsec" >              
+              <div style="text-align: center;margin-top: 5px;">
+                <ion-button size="small" color="primary"  (click)="selectpickup()" shape="round"  >    
+                  Select pickup station
+                  <ion-icon slot="start" name="create-outline"></ion-icon>                           
+                </ion-button>
+              </div>
+              <div *ngIf="divsec2" style="margin-left: 40px;margin-top: 10px;" >
+                <b>Pickup: </b> {{station}}<br>
+                 <b> Fee: Ksh. </b>  {{stationfee}}
+              </div>
+             
+            </div>
+
+
+            <div id="spacer" style="height: 30px;"></div>
+            
+            <ion-item lines="none">
+              <ion-label>Select Destination</ion-label>
+              <ion-radio slot="start" value="out"></ion-radio>
+            </ion-item>
+
+            <div  *ngIf="divselocation2" style="text-align: center;margin-top: 5px;padding-left: 5px;padding-right: 5px;" >       
+            
+              <ion-button size="small" color="primary"  (click)="selectLocation()" shape="round"  >    
+                   Select a destination 
+                  <ion-icon slot="start" name="create-outline"></ion-icon>                           
+              </ion-button>
+            </div> 
+            
+            <div *ngIf="divsec3" style="margin-left: 40px;margin-top: 10px;" >
+              <b>Destination: </b> {{desc}}<br>
+                {{Delifee}}
+            </div>
+                 
+          </ion-radio-group>
+        </ion-list>
+    </div>
+
+
+    <div style="padding-left: 10px;margin-top: 30px;margin-bottom: 10px;">      
+      <span style="font-size: medium;"> <b>Schedule your delivery  </b>  </span> 
+    </div>
+
+      
+      <div style="padding-left:10px;background-color: white;border-style: outset">
+        <ion-list>
+          <ion-radio-group value={{sched}} [(ngModel)]="sched"  (ionChange)="scheduleChecked()">
+                   
+            <ion-item lines="none">
+              <ion-label>Soonest possible  </ion-label>
+              <ion-radio slot="start" value="soonest"></ion-radio>
+            </ion-item>
+        
+            <ion-item lines="none">
+              <ion-label> Select date</ion-label>
+              <ion-radio slot="start" value="select_date"></ion-radio>
+            </ion-item>                          
+          </ion-radio-group>
+
+          <div *ngIf="divSeldate" style="margin-left: 25px;">          
+            <span> <b>Delivery date:</b> {{selected_date}} </span> &nbsp;&nbsp;
+            <ion-icon name="calendar-outline" (click)="get_dates()" style="width: 30px; height: 20px;margin-top: 5px;" ></ion-icon>            
+          </div>
+
+        </ion-list>
+       
+      </div>
+
+      <div id="spacer" style="height: 30px;"></div>
+     
+      <div style="padding-left:10px;background-color: white;border-style: outset">
+        <ion-grid >
+          <ion-row  >
+            <ion-col size="6" style="text-align: left" >
+              <ion-card-subtitle>Sub Total:  </ion-card-subtitle>                
+              </ion-col>
+              <ion-col size="6" style="text-align: right;" >
+                {{Products_fee_show}}
+              </ion-col>
+          </ion-row>
+          <ion-row  >
+            <ion-col size="6" style="text-align: left" >
+              <ion-card-subtitle> Delivery Fee: </ion-card-subtitle>                
+              </ion-col>
+              <ion-col size="6" style="text-align: right;" >
+                Ksh. {{Delivery_fee}}
+              </ion-col>
+          </ion-row>
+          <ion-row >
+            <ion-col size="6" style="text-align: left" >
+              <ion-card-subtitle>   Total Checkout: </ion-card-subtitle>                
+              </ion-col>
+              <ion-col size="6" style="text-align: right;" >
+                {{ThisFullamo}}
+              </ion-col>
+          </ion-row>
+       </ion-grid>
+    </div>
+   
+
+    <div style="margin-top: 20px;margin-left: 10px;margin-right: 10px;">
+      <ion-button size="large" color="primary" expand="block" (click)="Goto_payment()">Proceed to Payment</ion-button>   
+    </div>
+
+
+   </div>
+
+
+
+
+  <div *ngIf="payment" style="background-color: rgb(248, 244, 244);height: 100%;">
+
+        
+      <div style="padding-left: 10px;margin-top: 0px;margin-bottom: 10px;padding-top: 0px;">
+        <div id="spacer" style="height: 20px;"></div>
+            <span style="font-size: medium;"> <b>Select a Payment Method </b>  </span> 
+      </div>
+
+
+      <div style="padding-left:10px;background-color: white;border-style: outset">
+             <ion-list>
+              <ion-radio-group value={{pesa}} [(ngModel)]="pesa"  (ionChange)="Pay_method_Checked()" >
+                            
+                <ion-card >
+                                
+                  <ion-item lines="none" >
+                    <h5>Pay Now</h5> 
+                    <ion-radio slot="start" value="mpesa" checked ></ion-radio>
+                  </ion-item>
+
+
+                    <div *ngIf="divPaynow" style="margin-left: 40px;">
+                        <div style="margin-left: 10px;">
+                          <ion-label><img style="height: 20px;" src="assets/imgs/wallet.png"/> &nbsp;Your Wallet balance Ksh. 0</ion-label>
+                        </div>
+                       
+                        <div style="padding-left:10px"   >
+                          <ion-item lines="none" >
+                            <ion-label style="font-size: small;" class="ion-text-wrap">
+                              Before you proceed, please make sure you have enough money in  your account. 
+                              </ion-label>   
+                          </ion-item>
+                          <ion-item lines="none" >
+                            <ion-label style="font-size: small;" class="ion-text-wrap">
+                              Money back guarantee  /refund policy applies.
+                              </ion-label>   
+                          </ion-item>
+
+                        </div>
+                        
+                    </div>
+
+              </ion-card>
+
+              <ion-card >
+              
+                <ion-item lines="none">
+                  <h5>Pay on Delivery</h5>
+                  <ion-radio  slot="start" value="later" ></ion-radio>
+                </ion-item> 
+
+                <div *ngIf="divPaylater" style="margin-left: 40px;">
+                  <div>
+                    <img style="height: 30px;" src="assets/imgs/mpesa.png"/>
+                  </div>
+                  <ion-item lines="none" >
+                    <ion-label style="font-size: small;" class="ion-text-wrap">
+                       Pay when our delivery Associate delivers your package to your prefeered location.   
+                      </ion-label>   
+                  </ion-item>
+
+                  <ion-item lines="none" >
+                    <ion-label style="font-size: small;" class="ion-text-wrap">
+                      We encourage you to pay via mobile money
+                     </ion-label>         
+                  </ion-item>
+                
+                </div>
+
+                <div *ngIf="divPaylaterNot" style="margin-left: 40px;">
+                  <ion-item lines="none" >
+                    <ion-label style="font-size: small;" class="ion-text-wrap">
+                       Unavailable
+                     </ion-label>         
+                  </ion-item>
+
+                  <ion-item lines="none" >
+                  <ion-label style="font-size: small;" class="ion-text-wrap">
+                    <ion-button  (click)="reasons()" fill="clear"    style="width: 300px;"   >            
+                      <span style="text-decoration: underline;">Reasons</span>
+                   </ion-button>                  
+                  </ion-label>         
+               </ion-item>
+                
+                </div>
+
+
+
+              </ion-card>
+
+              </ion-radio-group>
+               
+
+            </ion-list>
+
+      </div>
+
+
+
+            <div>
+              <div style="padding-left: 10px;margin-top: 20px;margin-bottom: 10px;">
+                <span style="font-size: medium;"> Use a Voucher   </span> 
+             </div>
+
+              <ion-card >
+                <ion-grid >
+                  <ion-row  >
+                    <ion-col size="8" style="text-align: left" >
+                      <ion-input  style="height: 35px;width: 100%;border-style: inset;" placeholder="Enter a Voucher code"  [(ngModel)]="usage.voucher" ></ion-input>   
+                      
+                    </ion-col>
+          
+                    <ion-col size="4" style="text-align: right;" >
+                      <ion-button style="width: 100%;" color="primary" expand="block" (click)="vouchercheck()">Apply</ion-button>   
+                    
+                    </ion-col>
+          
+                  </ion-row>
+                </ion-grid>
+
+              </ion-card>
+
+          </div> 
+
+          <div style="margin-top: 20px;">
+
+            <div style="padding-left:10px;background-color: white;border-style: outset">
+              <ion-grid >
+                  <ion-row  >
+                    <ion-col size="6" style="text-align: left" >
+                      <ion-card-subtitle>Sub Total:  </ion-card-subtitle>                
+                      </ion-col>
+                      <ion-col size="6" style="text-align: right;" >
+                        {{Products_fee_show}}
+                      </ion-col>
+                  </ion-row>
+                  <ion-row  >
+                    <ion-col size="6" style="text-align: left" >
+                      <ion-card-subtitle> Delivery Fee: </ion-card-subtitle>                
+                      </ion-col>
+                      <ion-col size="6" style="text-align: right;" >
+                        Ksh. {{Delivery_fee}}
+                      </ion-col>
+                  </ion-row>
+                  <ion-row >
+                    <ion-col size="6" style="text-align: left" >
+                      <ion-card-subtitle>   Total Checkout: </ion-card-subtitle>                
+                      </ion-col>
+                      <ion-col size="6" style="text-align: right;" >
+                        {{ThisFullamo}}
+                      </ion-col>
+                  </ion-row>
+              </ion-grid>
+           </div>
+          
+            <div *ngIf="divtosummary" style="margin-top: 30px;margin-left: 10px;margin-right: 10px;">
+              <ion-button size="large" color="primary" expand="block" (click)="Goto_summary()">Proceed to summary</ion-button>   
+            </div>
+
+          </div>
+       
+  </div>
+
+
+
+
+ <div *ngIf="divsummary" style="background-color: rgb(248, 244, 244);height: 100%;">
+ 
+ 
+    <div style="padding-left: 10px;margin-top: 0px;margin-bottom: 10px;padding-top: 0px;">
+      <div id="spacer" style="height: 20px;"></div>
+          <span style="font-size: medium;"> Your order   </span> 
+    </div>
+    
+
+    <div style="padding-left:10px;background-color: white;border-style: outset">
+       
+
+        <ion-grid >
+            <ion-row  >
+               <ion-col size="6" style="text-align: left" >
+                <ion-card-subtitle>Sub Total:  </ion-card-subtitle>                
+                </ion-col>
+                <ion-col size="6" style="text-align: right;" >
+                  {{Products_fee_show}}
+                </ion-col>
+            </ion-row>
+             <ion-row  >
+               <ion-col size="6" style="text-align: left" >
+                <ion-card-subtitle> Delivery Fee: </ion-card-subtitle>                
+                </ion-col>
+                <ion-col size="6" style="text-align: right;" >
+                   Ksh. {{Delivery_fee}}
+                </ion-col>
+            </ion-row>
+            <ion-row >
+               <ion-col size="6" style="text-align: left" >
+                <ion-card-subtitle>   Total Checkout: </ion-card-subtitle>                
+                </ion-col>
+                <ion-col size="6" style="text-align: right;" >
+                   {{ThisFullamo}}
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+
+
+        
+      </div>
+      
+    
+      <ion-grid style="margin-top: 30px;padding-left: 5px;" >
+        <ion-row  >
+          <ion-col size="10" style="text-align: left" >
+            <span style="font-size: medium;"> Your Contact    </span> 
+          </ion-col>
+
+          <ion-col size="2" style="text-align: center;" >
+            <ion-icon style="height: 40px;" name="create-outline" style="align-self: center;"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <div style="padding-left:10px;background-color: white;border-style: outset"> 
+       <div *ngFor="let names of personalinfo;" style="margin-bottom: 10px;margin-top: 10px;" >
+
+        <p> Email: &nbsp;&nbsp;  {{names.Fetchedemail}}  </p>  
+        <p> Tel:&nbsp;&nbsp; {{names.Useruphone}}    </p>    
+
+               
+                             
+        </div>
+     </div>
+
+
+     <div style="padding-left: 10px;margin-top: 40px;margin-bottom: 10px;">
+      <span style="font-size: medium;"> Delivery Method     </span>       
+    </div>
+     
+     <div style="padding-left:10px;background-color: white;border-style: outset">
+       
+        <p> {{delimethod_show}}   </p>  
+        <p> Delivery Fee:&nbsp; Ksh.{{Delivery_fee}}   </p>    
+
+
+     </div>
+
+     <div style="padding-left: 10px;margin-top: 30px;margin-bottom: 10px;">
+          <span style="font-size: medium;"> Payment Method     </span> 
+    </div>
+     
+     
+    <div style="padding-left:10px;background-color: white;border-style: outset;height: 60px;">
+      <div id="spacer" style="height: 10px;"></div>
+      <span style="font-size: large;"> {{paymethod}}     </span> 
+
+   </div>
+     
+         
+
+       <div style="margin-top: 30px;margin-left: 10px;margin-right: 10px;">
+        <ion-button size="large" color="primary" expand="block" (click)="checkout_confirming()">Confirm Order</ion-button>   
+      </div>
+
+  
+</div>
+  
+</ion-content>

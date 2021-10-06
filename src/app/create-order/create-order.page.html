@@ -1,0 +1,74 @@
+
+<ion-content>
+    <ion-grid   style="margin-top: 5px;"  > 
+                
+      <ion-row  style="background-color:snow"  > 
+          
+             <ion-col align-self: center style="justify-content: right;" size="auto" class="centered"    >
+                 <ion-icon style="width:25px;height: 25px;margin-right: 1px;" name="arrow-back-outline" (click)="SearchProduct()"></ion-icon>                
+                  </ion-col>
+
+                 
+                  <ion-col align-self: stretch push-md="1" >
+
+                    <div style="margin-top: 10px;text-align:center">
+                   <p>Create Order</p> 
+                    </div>                     
+                   
+                  </ion-col>
+        
+                 
+                  <ion-col size="auto"  class="centered" style="align-items: right;"   >
+                    <div style="margin-top: 1px;text-align: right;">
+                   <ion-icon style="width:25px;height: 25px;margin-right: 1px;" name="bag-handle-outline"  (click)="gotolist()"></ion-icon>
+                                                                                                                                                            
+                    </div>  
+                  </ion-col>
+
+
+      </ion-row> 
+  </ion-grid>
+    
+
+<div style="height:75px"></div>
+          <ion-card style="border-radius:20px;margin-left:20px;margin-right:20px">
+               
+               <ion-item>
+                   <ion-input    readonly  [(ngModel)]="usage.prodname" style="color:black"> {{prodname}}</ion-input>
+                  <ion-icon class="ion-align-self-center" name="document-lock" slot="start"></ion-icon>
+                 </ion-item>
+          
+
+          <div style="height:25px"></div>
+              <ion-item>
+               <ion-input  placeholder="Quantity" type="number"  [(ngModel)]="usage.prodqty" style="color:black"></ion-input>
+                  <ion-icon class="ion-align-self-center" name="document-lock" slot="start"></ion-icon>
+           
+              </ion-item>
+             
+          <div style="height:25px"></div>
+              <ion-item>
+                <ion-input  placeholder="Description" style="color:black"  [(ngModel)]="usage.proddesc" ></ion-input>
+              
+                  <ion-icon class="ion-align-self-center" name="document-lock" slot="start"></ion-icon>
+           
+              </ion-item>
+             
+          </ion-card>
+           <div style="height:25px"></div>
+           
+                   <div class="action" style="text-align: center;margin-top: 15px;width: 100%;margin-left: 50px;">
+             <ion-button color="warning" shape="round" style="border-bottom-right-radius: 5px;border-top-right-radius: 5px;"
+                     (click)="addToDo()"> 
+                        Create Order
+                      
+                    </ion-button>
+
+           <ion-button color="tertiary" shape="round" style="border-bottom-right-radius: 5px;border-top-right-radius: 5px;"
+                     (click)="gotolist()"> 
+                      View List
+                      
+                    </ion-button>
+          </div>
+          
+</ion-content>

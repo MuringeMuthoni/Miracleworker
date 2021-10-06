@@ -1,0 +1,29 @@
+
+
+<ion-content>
+  <div id="container">
+    <ion-list>
+      <ion-list-header>Tick to send to Quotation</ion-list-header>
+ 
+      <ion-card *ngFor="let todo of todos;index as slNo"
+        [ngClass]="{done: todo.isDone, pending:  !todo.isDone}">
+      <ion-item lines="inset" >
+          
+        <ion-label>
+          <h4>{{slNo+1}}. {{todo.description}}</h4>
+        </ion-label>
+        <ion-button color="success" (click)="doneToDo(todo.id)" slot="end" *ngIf="!todo.isDone">
+          <ion-icon name="checkmark-done-sharp"></ion-icon>
+        </ion-button>
+        <ion-button color="danger" (click)="deleteToDo(todo.id)" slot="end">
+          <ion-icon name="trash-sharp"></ion-icon>
+        </ion-button>
+        
+      </ion-item>
+      </ion-card>
+    </ion-list>
+  </div>
+  <div style="text-align:center">
+    <ion-button shape="round" color="tertiary"  (click)="rgquotation()"> Send To Quotation </ion-button>
+  </div>
+</ion-content>

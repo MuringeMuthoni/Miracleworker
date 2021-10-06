@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar    style="padding-right: 10px">
+    <div text-center style="margin-left: 10px;font-weight: bold;color: black;" >
+        Select your Delivery Location      
+    </div>  
+      <!-- <ion-buttons slot="start">
+        <ion-back-button style="color: black" (click)="go_home()"></ion-back-button>
+      </ion-buttons> -->
+      <!-- <ion-img slot="end"  style="width: 50px;height:50px" src="assets/icon.png"></ion-img> -->
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content  >
+  
+    <div style="text-align: center; margin-top: 7px;" >
+   
+
+      <div class="search-holder" style="text-align: left;">
+          <ion-icon ios="ios-search" md="md-search"></ion-icon>
+
+          <input style="width: 90%;border-style: none;" type="text" [(ngModel)]="usage.pickup"  (keydown.enter)="$event.preventDefault()" placeholder="Select location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search>
+
+          <div *ngIf="address.set">
+            <ion-icon ios="ios-close" md="md-close" (click)="cancelOrigin()"></ion-icon>
+          </div>
+    
+      </div>  
+        <span class="pac-container"></span>     
+    </div>
+  
+
+
+    <div #mapElement class="map"  ></div> 
+
+    <div [hidden]="pointerVisible" id="locator"></div>
+    <div [hidden]="pointerVisible" color="qx" id="locatortitle" ><b> </b>{{currentPosition}}</div>
+
+    <div class="dts" style="margin-left: 2px;" >
+      <ion-card >  
+        <ion-list>
+          <!-- <ion-list-header>Delivery Information</ion-list-header>  -->
+
+          <div *ngIf="divcalc"   style="text-align:center;margin-top: 2px;margin-bottom: 5px;padding-left: 40px;padding-right: 40px;">     
+            <ion-button size="large" size="big" expand="block" (click)="compute_rates()">Calculate Delivery fee</ion-button>         
+          </div>
+                         
+          <div  *ngIf="divproceed"  style="text-align:center;margin-top: 15px;margin-bottom: 5px;padding-left: 20px;padding-right: 20px;">     
+                 <ion-label><ion-icon name="card-outline" ></ion-icon> {{this.delifee_show }}</ion-label>                
+         </div>
+
+        </ion-list>   
+      </ion-card>  
+
+      
+    </div>
+    
+
+
+</ion-content>
+
+
+<ion-footer class="ion-no-border"  >
+  <ion-toolbar> 
+
+    <div  *ngIf="divproceed"  style="text-align:center;margin-top: 15px;margin-bottom: 5px;padding-left: 20px;padding-right: 20px;">     
+      <ion-button style="margin-left: 20px;margin-right: 20px;" size="large" expand="block" (click)="pickUp()">Proceed to checkout</ion-button>      
+  </div>
+
+   
+ </ion-toolbar>
+</ion-footer>

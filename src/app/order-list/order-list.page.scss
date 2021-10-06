@@ -1,0 +1,29 @@
+#container {
+    text-align: center;
+    left: 0;
+    right: 0;
+  }
+  #container strong {
+    font-size: 20px;
+    line-height: 26px;
+  }
+  ion-item {
+    color: black;
+    align-items: center;
+  }
+  ion-button {
+    align-self: flex-end;
+  }
+  ion-header {
+   --ion-background-color: #34246e;
+    font-size: 20px;
+  }
+  ion-input {
+    color: white;
+  }
+  .done {
+    --ion-background-color: rgb(162, 250, 140) !important;
+  }
+  .pending {
+    --ion-background-color: rgb(247, 137, 110) !important;
+  }
